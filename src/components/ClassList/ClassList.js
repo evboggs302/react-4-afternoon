@@ -1,23 +1,37 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default class ClassList extends Component {
-  // constructor() {
-  //   super();
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      students: []
+    };
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+    axios
+      .get(
+        `http://localhost:3005/students?class=${this.props.match.params.class}`
+      )
+      .then(response => {
+        this.setState({
+          students: response.data
+        });
+      });
+    console.log(this.state.students);
+  }
 
   render() {
+    let mappedStudents = this.state.students.map((e, i) => {
+      return <h3 key={i}>{`${e.last_name}, ${e.first_name}`}</h3>;
+    });
     return (
       <div className="box">
-        <Link to="/classlist/MATH1010">
-          <button className="btn">Math 1010</button>
-        </Link>
-        <Link to="/classlist/ENG2010">
-          <button className="btn">English 2010</button>
-        </Link>
-        <Link to="/classlist/BIO2020">
-          <button className="btn">Biology 2020</button>
-        </Link>
+        <h1>{this.props.match.params.class}</h1>
+        <h2>ClassList:</h2>
+        {mappedStudents}
       </div>
     );
   }
