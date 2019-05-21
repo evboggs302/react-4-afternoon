@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { HashRouter, Link } from "react-router-dom";
-import Routes from "./routes";
+import routes from "./routes";
 
 export default class App extends Component {
   render() {
@@ -18,7 +18,7 @@ export default class App extends Component {
               </Link>
             </div>
           </nav>
-          {Routes}
+          {routes}
         </div>
       </HashRouter>
     );
